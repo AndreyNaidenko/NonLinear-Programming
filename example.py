@@ -9,6 +9,7 @@ c=[]
 c.append("8-x1-x2")
 c.append("12-2*x1+x2")
 F=get_f(f)
+cond=get_conditions(c,2)
 L=get_L(F,cond)
 dL,x,y=diff_L(L,2,2)
 
@@ -21,7 +22,7 @@ TeX=TeX+"\\begin{document} \r\n"
 TeX=TeX+"\\begin{center} \r\n"  
 TeX=TeX+"$$F="+sp.latex(F) +"\\to max $$ \r\n"
 TeX=TeX+"$\\begin{cases} \r\n"
-cond=get_conditions(c,2)
+
 for c in cond:
     TeX=TeX+"\t"+sp.latex(c)+"\\leq 0 \\\\ \r\n" 
 TeX=TeX+"\\end{cases}$ \r\n" 
