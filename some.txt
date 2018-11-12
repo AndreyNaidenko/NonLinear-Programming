@@ -1,0 +1,156 @@
+\documentclass{article} 
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english,russian]{babel}
+\usepackage{amsmath}
+\begin{document} 
+\begin{center} 
+$$F=- x_{1}^{2} + 2 x_{1} - 2 x_{2}^{2} + 4 x_{2}\to max $$ 
+$\begin{cases} 
+	- x_{1} - 2 x_{2} + 8\leq0 \\ 
+	- 2 x_{1} + x_{2} + 12\leq0 \\ 
+\end{cases}$ 
+\newline Составляем функцию L 
+$$ L(x,y)=- x_{1}^{2} + 2 x_{1} - 2 x_{2}^{2} + 4 x_{2} + y_{1} \left(- x_{1} - 2 x_{2} + 8\right) + y_{2} \left(- 2 x_{1} + x_{2} + 12\right)$$ 
+\newline Находим частные производные от функции L 
+$$\frac{\partial L(x,y)}{\partial x_{1}}=- 2 x_{1} - y_{1} - 2 y_{2} + 2$$
+$$\frac{\partial L(x,y)}{\partial x_{2}}=- 4 x_{2} - 2 y_{1} + y_{2} + 4$$
+$$\frac{\partial L(x,y)}{\partial y_{1}}=- x_{1} - 2 x_{2} + 8$$
+$$\frac{\partial L(x,y)}{\partial y_{2}}=- 2 x_{1} + x_{2} + 12$$
+$\begin{cases} 
+	- 2 x_{1} - y_{1} - 2 y_{2} + 2\leq0 \\ 
+	- 4 x_{2} - 2 y_{1} + y_{2} + 4\leq0 \\ 
+	- x_{1} - 2 x_{2} + 8\geq0 \\ 
+	- 2 x_{1} + x_{2} + 12\geq0 \\ 
+\end{cases}$ 
+$\begin{cases} 
+	2 x_{1} + y_{1} + 2 y_{2} - 2\geq0 \\ 
+	4 x_{2} + 2 y_{1} - y_{2} - 4\geq0 \\ 
+	x_{1} + 2 x_{2} - 8\leq0 \\ 
+	2 x_{1} - x_{2} - 12\leq0 \\ 
+\end{cases}$ 
+$\begin{cases} 
+	- v_{1} + 2 x_{1} + y_{1} + 2 y_{2} - 2=0 \\ 
+	- v_{2} + 4 x_{2} + 2 y_{1} - y_{2} - 4=0 \\ 
+	w_{1} + x_{1} + 2 x_{2} - 8=0 \\ 
+	w_{2} + 2 x_{1} - x_{2} - 12=0 \\ 
+\end{cases}$ 
+$\begin{cases} 
+	- v_{1} + 2 x_{1} + y_{1} + 2 y_{2} + z_{1} - 2=0 \\ 
+	- v_{2} + 4 x_{2} + 2 y_{1} - y_{2} + z_{2} - 4=0 \\ 
+	w_{1} + x_{1} + 2 x_{2} - 8=0 \\ 
+	w_{2} + 2 x_{1} - x_{2} - 12=0 \\ 
+\end{cases}$ 
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+  \hline 
+	Базис&	С	&$2$	&$4$	&$0$	&$0$	&$0$	&$0$	&$0$	&$0$	&$- M$	&$- M$	&\\ 
+ \hline 
+ 	& 	&$x_{1}$	&$x_{2}$	&$y_{1}$	&$y_{2}$	&$v_{1}$	&$v_{2}$	&$w_{1}$	&$w_{2}$	&$z_{1}$	&$z_{2}$	&$b_{i}$ \\ 
+ \hline 
+	 $z_{1}$&$- M$	&$2$	&$0$	&$1$	&$2$	&$-1$	&$0$	&$0$	&$0$	&$1$	&$0$	&$2$ \\ 
+ \hline 
+	 $z_{2}$&$- M$	&$0$	&$4$	&$2$	&$-1$	&$0$	&$-1$	&$0$	&$0$	&$0$	&$1$	&$4$ \\ 
+ \hline 
+	 $w_{2}$&$0$	&$1$	&$2$	&$0$	&$0$	&$0$	&$0$	&$1$	&$0$	&$0$	&$0$	&$8$ \\ 
+ \hline 
+	 $w_{1}$&$0$	&$2$	&$-1$	&$0$	&$0$	&$0$	&$0$	&$0$	&$1$	&$0$	&$0$	&$12$ \\ 
+ \hline 
+\end{tabular}
+$\Delta_{1}=\left[\begin{matrix}- M & - M & 0 & 0\end{matrix}\right]\cdot\left[\begin{matrix}2\\0\\1\\2\end{matrix}\right]+(-2)=- 2 M - 2$
+\newline$\Delta_{2}=\left[\begin{matrix}- M & - M & 0 & 0\end{matrix}\right]\cdot\left[\begin{matrix}0\\4\\2\\-1\end{matrix}\right]+(-4)=- 4 M - 4$
+\newline$\Delta_{3}=\left[\begin{matrix}- M & - M & 0 & 0\end{matrix}\right]\cdot\left[\begin{matrix}1\\2\\0\\0\end{matrix}\right]+(0)=- 3 M$
+\newline$\Delta_{4}=\left[\begin{matrix}- M & - M & 0 & 0\end{matrix}\right]\cdot\left[\begin{matrix}2\\-1\\0\\0\end{matrix}\right]+(0)=- M$
+\newline$\Delta_{5}=\left[\begin{matrix}- M & - M & 0 & 0\end{matrix}\right]\cdot\left[\begin{matrix}-1\\0\\0\\0\end{matrix}\right]+(0)=M$
+\newline$\Delta_{6}=\left[\begin{matrix}- M & - M & 0 & 0\end{matrix}\right]\cdot\left[\begin{matrix}0\\-1\\0\\0\end{matrix}\right]+(0)=M$
+\newline$\Delta_{7}=\left[\begin{matrix}- M & - M & 0 & 0\end{matrix}\right]\cdot\left[\begin{matrix}0\\0\\1\\0\end{matrix}\right]+(0)=0$
+\newline$\Delta_{8}=\left[\begin{matrix}- M & - M & 0 & 0\end{matrix}\right]\cdot\left[\begin{matrix}0\\0\\0\\1\end{matrix}\right]+(0)=0$
+\newline$\Delta_{9}=\left[\begin{matrix}- M & - M & 0 & 0\end{matrix}\right]\cdot\left[\begin{matrix}1\\0\\0\\0\end{matrix}\right]+(M)=0$
+\newline$\Delta_{10}=\left[\begin{matrix}- M & - M & 0 & 0\end{matrix}\right]\cdot\left[\begin{matrix}0\\1\\0\\0\end{matrix}\right]+(M)=0$
+\newlineВводим в базис	$x_{2}$
+Для определения вектора ,подлежащего исключению из базиса,находим $min(\infty,1,4,-12,)=1$
+Исключаем 	$z_{2}$
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+  \hline 
+	Базис&	С	&$2$	&$4$	&$0$	&$0$	&$0$	&$0$	&$0$	&$0$	&$- M$	&$- M$	&\\ 
+ \hline 
+ 	& 	&$x_{1}$	&$x_{2}$	&$y_{1}$	&$y_{2}$	&$v_{1}$	&$v_{2}$	&$w_{1}$	&$w_{2}$	&$z_{1}$	&$z_{2}$	&$b_{i}$ \\ 
+ \hline 
+	 $z_{1}$&$- M$	&$2$	&$0$	&$1$	&$2$	&$-1$	&$0$	&$0$	&$0$	&$1$	&$0$	&$2$ \\ 
+ \hline 
+	 $x_{2}$&$4$	&$0$	&$1$	&$\frac{1}{2}$	&$- \frac{1}{4}$	&$0$	&$- \frac{1}{4}$	&$0$	&$0$	&$0$	&$\frac{1}{4}$	&$1$ \\ 
+ \hline 
+	 $w_{2}$&$0$	&$1$	&$0$	&$-1$	&$\frac{1}{2}$	&$0$	&$\frac{1}{2}$	&$1$	&$0$	&$0$	&$- \frac{1}{2}$	&$6$ \\ 
+ \hline 
+	 $w_{1}$&$0$	&$2$	&$0$	&$\frac{1}{2}$	&$- \frac{1}{4}$	&$0$	&$- \frac{1}{4}$	&$0$	&$1$	&$0$	&$\frac{1}{4}$	&$13$ \\ 
+ \hline 
+\end{tabular}
+$\Delta_{1}=\left[\begin{matrix}- M & 4 & 0 & 0\end{matrix}\right]\cdot\left[\begin{matrix}2\\0\\1\\2\end{matrix}\right]+(-2)=- 2 M - 2$
+\newline$\Delta_{2}=\left[\begin{matrix}- M & 4 & 0 & 0\end{matrix}\right]\cdot\left[\begin{matrix}0\\1\\0\\0\end{matrix}\right]+(-4)=0$
+\newline$\Delta_{3}=\left[\begin{matrix}- M & 4 & 0 & 0\end{matrix}\right]\cdot\left[\begin{matrix}1\\\frac{1}{2}\\-1\\\frac{1}{2}\end{matrix}\right]+(0)=- M + 2$
+\newline$\Delta_{4}=\left[\begin{matrix}- M & 4 & 0 & 0\end{matrix}\right]\cdot\left[\begin{matrix}2\\- \frac{1}{4}\\\frac{1}{2}\\- \frac{1}{4}\end{matrix}\right]+(0)=- 2 M - 1$
+\newline$\Delta_{5}=\left[\begin{matrix}- M & 4 & 0 & 0\end{matrix}\right]\cdot\left[\begin{matrix}-1\\0\\0\\0\end{matrix}\right]+(0)=M$
+\newline$\Delta_{6}=\left[\begin{matrix}- M & 4 & 0 & 0\end{matrix}\right]\cdot\left[\begin{matrix}0\\- \frac{1}{4}\\\frac{1}{2}\\- \frac{1}{4}\end{matrix}\right]+(0)=-1$
+\newline$\Delta_{7}=\left[\begin{matrix}- M & 4 & 0 & 0\end{matrix}\right]\cdot\left[\begin{matrix}0\\0\\1\\0\end{matrix}\right]+(0)=0$
+\newline$\Delta_{8}=\left[\begin{matrix}- M & 4 & 0 & 0\end{matrix}\right]\cdot\left[\begin{matrix}0\\0\\0\\1\end{matrix}\right]+(0)=0$
+\newline$\Delta_{9}=\left[\begin{matrix}- M & 4 & 0 & 0\end{matrix}\right]\cdot\left[\begin{matrix}1\\0\\0\\0\end{matrix}\right]+(M)=0$
+\newline$\Delta_{10}=\left[\begin{matrix}- M & 4 & 0 & 0\end{matrix}\right]\cdot\left[\begin{matrix}0\\\frac{1}{4}\\- \frac{1}{2}\\\frac{1}{4}\end{matrix}\right]+(M)=M + 1$
+\newlineВводим в базис	$x_{1}$
+Для определения вектора ,подлежащего исключению из базиса,находим $min(1,\infty,6,\frac{13}{2},)=1$
+Исключаем 	$z_{1}$
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+  \hline 
+	Базис&	С	&$2$	&$4$	&$0$	&$0$	&$0$	&$0$	&$0$	&$0$	&$- M$	&$- M$	&\\ 
+ \hline 
+ 	& 	&$x_{1}$	&$x_{2}$	&$y_{1}$	&$y_{2}$	&$v_{1}$	&$v_{2}$	&$w_{1}$	&$w_{2}$	&$z_{1}$	&$z_{2}$	&$b_{i}$ \\ 
+ \hline 
+	 $x_{1}$&$2$	&$1$	&$0$	&$\frac{1}{2}$	&$1$	&$- \frac{1}{2}$	&$0$	&$0$	&$0$	&$\frac{1}{2}$	&$0$	&$1$ \\ 
+ \hline 
+	 $x_{2}$&$4$	&$0$	&$1$	&$\frac{1}{2}$	&$- \frac{1}{4}$	&$0$	&$- \frac{1}{4}$	&$0$	&$0$	&$0$	&$\frac{1}{4}$	&$1$ \\ 
+ \hline 
+	 $w_{2}$&$0$	&$0$	&$0$	&$- \frac{3}{2}$	&$- \frac{1}{2}$	&$\frac{1}{2}$	&$\frac{1}{2}$	&$1$	&$0$	&$- \frac{1}{2}$	&$- \frac{1}{2}$	&$5$ \\ 
+ \hline 
+	 $w_{1}$&$0$	&$0$	&$0$	&$- \frac{1}{2}$	&$- \frac{9}{4}$	&$1$	&$- \frac{1}{4}$	&$0$	&$1$	&$-1$	&$\frac{1}{4}$	&$11$ \\ 
+ \hline 
+\end{tabular}
+$\Delta_{1}=\left[\begin{matrix}2 & 4 & 0 & 0\end{matrix}\right]\cdot\left[\begin{matrix}1\\0\\0\\0\end{matrix}\right]+(-2)=0$
+\newline$\Delta_{2}=\left[\begin{matrix}2 & 4 & 0 & 0\end{matrix}\right]\cdot\left[\begin{matrix}0\\1\\0\\0\end{matrix}\right]+(-4)=0$
+\newline$\Delta_{3}=\left[\begin{matrix}2 & 4 & 0 & 0\end{matrix}\right]\cdot\left[\begin{matrix}\frac{1}{2}\\\frac{1}{2}\\- \frac{3}{2}\\- \frac{1}{2}\end{matrix}\right]+(0)=3$
+\newline$\Delta_{4}=\left[\begin{matrix}2 & 4 & 0 & 0\end{matrix}\right]\cdot\left[\begin{matrix}1\\- \frac{1}{4}\\- \frac{1}{2}\\- \frac{9}{4}\end{matrix}\right]+(0)=1$
+\newline$\Delta_{5}=\left[\begin{matrix}2 & 4 & 0 & 0\end{matrix}\right]\cdot\left[\begin{matrix}- \frac{1}{2}\\0\\\frac{1}{2}\\1\end{matrix}\right]+(0)=-1$
+\newline$\Delta_{6}=\left[\begin{matrix}2 & 4 & 0 & 0\end{matrix}\right]\cdot\left[\begin{matrix}0\\- \frac{1}{4}\\\frac{1}{2}\\- \frac{1}{4}\end{matrix}\right]+(0)=-1$
+\newline$\Delta_{7}=\left[\begin{matrix}2 & 4 & 0 & 0\end{matrix}\right]\cdot\left[\begin{matrix}0\\0\\1\\0\end{matrix}\right]+(0)=0$
+\newline$\Delta_{8}=\left[\begin{matrix}2 & 4 & 0 & 0\end{matrix}\right]\cdot\left[\begin{matrix}0\\0\\0\\1\end{matrix}\right]+(0)=0$
+\newline$\Delta_{9}=\left[\begin{matrix}2 & 4 & 0 & 0\end{matrix}\right]\cdot\left[\begin{matrix}\frac{1}{2}\\0\\- \frac{1}{2}\\-1\end{matrix}\right]+(M)=M + 1$
+\newline$\Delta_{10}=\left[\begin{matrix}2 & 4 & 0 & 0\end{matrix}\right]\cdot\left[\begin{matrix}0\\\frac{1}{4}\\- \frac{1}{2}\\\frac{1}{4}\end{matrix}\right]+(M)=M + 1$
+\newlineВводим в базис	$v_{1}$
+Для определения вектора ,подлежащего исключению из базиса,находим $min(-2,\infty,10,11,)=10$
+Исключаем 	$w_{2}$
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+  \hline 
+	Базис&	С	&$2$	&$4$	&$0$	&$0$	&$0$	&$0$	&$0$	&$0$	&$- M$	&$- M$	&\\ 
+ \hline 
+ 	& 	&$x_{1}$	&$x_{2}$	&$y_{1}$	&$y_{2}$	&$v_{1}$	&$v_{2}$	&$w_{1}$	&$w_{2}$	&$z_{1}$	&$z_{2}$	&$b_{i}$ \\ 
+ \hline 
+	 $x_{1}$&$2$	&$1$	&$0$	&$-1$	&$\frac{1}{2}$	&$0$	&$\frac{1}{2}$	&$1$	&$0$	&$0$	&$- \frac{1}{2}$	&$6$ \\ 
+ \hline 
+	 $x_{2}$&$4$	&$0$	&$1$	&$\frac{1}{2}$	&$- \frac{1}{4}$	&$0$	&$- \frac{1}{4}$	&$0$	&$0$	&$0$	&$\frac{1}{4}$	&$1$ \\ 
+ \hline 
+	 $v_{1}$&$0$	&$0$	&$0$	&$-3$	&$-1$	&$1$	&$1$	&$2$	&$0$	&$-1$	&$-1$	&$10$ \\ 
+ \hline 
+	 $w_{1}$&$0$	&$0$	&$0$	&$\frac{5}{2}$	&$- \frac{5}{4}$	&$0$	&$- \frac{5}{4}$	&$-2$	&$1$	&$0$	&$\frac{5}{4}$	&$1$ \\ 
+ \hline 
+\end{tabular}
+$\Delta_{1}=\left[\begin{matrix}2 & 4 & 0 & 0\end{matrix}\right]\cdot\left[\begin{matrix}1\\0\\0\\0\end{matrix}\right]+(-2)=0$
+\newline$\Delta_{2}=\left[\begin{matrix}2 & 4 & 0 & 0\end{matrix}\right]\cdot\left[\begin{matrix}0\\1\\0\\0\end{matrix}\right]+(-4)=0$
+\newline$\Delta_{3}=\left[\begin{matrix}2 & 4 & 0 & 0\end{matrix}\right]\cdot\left[\begin{matrix}-1\\\frac{1}{2}\\-3\\\frac{5}{2}\end{matrix}\right]+(0)=0$
+\newline$\Delta_{4}=\left[\begin{matrix}2 & 4 & 0 & 0\end{matrix}\right]\cdot\left[\begin{matrix}\frac{1}{2}\\- \frac{1}{4}\\-1\\- \frac{5}{4}\end{matrix}\right]+(0)=0$
+\newline$\Delta_{5}=\left[\begin{matrix}2 & 4 & 0 & 0\end{matrix}\right]\cdot\left[\begin{matrix}0\\0\\1\\0\end{matrix}\right]+(0)=0$
+\newline$\Delta_{6}=\left[\begin{matrix}2 & 4 & 0 & 0\end{matrix}\right]\cdot\left[\begin{matrix}\frac{1}{2}\\- \frac{1}{4}\\1\\- \frac{5}{4}\end{matrix}\right]+(0)=0$
+\newline$\Delta_{7}=\left[\begin{matrix}2 & 4 & 0 & 0\end{matrix}\right]\cdot\left[\begin{matrix}1\\0\\2\\-2\end{matrix}\right]+(0)=2$
+\newline$\Delta_{8}=\left[\begin{matrix}2 & 4 & 0 & 0\end{matrix}\right]\cdot\left[\begin{matrix}0\\0\\0\\1\end{matrix}\right]+(0)=0$
+\newline$\Delta_{9}=\left[\begin{matrix}2 & 4 & 0 & 0\end{matrix}\right]\cdot\left[\begin{matrix}0\\0\\-1\\0\end{matrix}\right]+(M)=M$
+\newline$\Delta_{10}=\left[\begin{matrix}2 & 4 & 0 & 0\end{matrix}\right]\cdot\left[\begin{matrix}- \frac{1}{2}\\\frac{1}{4}\\-1\\\frac{5}{4}\end{matrix}\right]+(M)=M$
+\newlineВводим в базис	$x_{1}$
+Все $\Delta_{i}$ не отрицательны , план является оптимальным 
+\end{center}  
+\end{document} 
