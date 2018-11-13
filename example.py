@@ -16,12 +16,12 @@ cond=get_conditions(c,3)
 simplex(F,cond,[180,100,95],6,3)
 '''
 
-f="2*x1+4*x2-x1**2-2*x2**2"
+f="-5*x1**2-2*x2**2-3*x1+9*x2"
 sgn=["<","<"]
-c=["x1+2*x2","2*x1-x2"]
+c=["-3*x1-6*x2","x1+7*x2"]
 x=get_s(2,'x')
 VAR=[x[0],x[1]]
-cb=[8,12]
+cb=[10,2]
 F=get_f(f)
 cond=get_conditions(c,cb,2)
 L,VAR=get_L(F,cond,VAR)
@@ -32,10 +32,11 @@ packages=['[T2A]{fontenc}','[utf8]{inputenc}','[english,russian]{babel}','{amsma
 up="/usepackage"
 for p in packages:
     TeX=TeX+"\\usepackage"+p+'\r\n'
+
 TeX=TeX+"\\begin{document} \r\n"
 TeX=TeX+"\\begin{center} \r\n"  
 TeX=TeX+"$$F="+sp.latex(F) +"\\to max $$ \r\n"
-TeX=TeX+cond_to_tex(cond,sgn);
+TeX=TeX+cond_to_tex(cond,[">",">"]);
 TeX=TeX+"\\newline Составляем функцию L \r\n"
 TeX=TeX+"$$ L(x,y)="+sp.latex(L)+"$$ \r\n"
 TeX=TeX+"\\newline Находим частные производные от функции L \r\n"

@@ -215,8 +215,10 @@ def simplex(F,F1,conditions,b,n,m,x):
                     TeX=TeX+"\\infty,"
                     mi.append(1000000)
                 else:
-                    if ST[i,k]>0: 
-                        mi.append(ST[i,n]/ST[i,k])
+                    
+                    if ST[i,k]>0:
+                        if ST[i,n]/ST[i,k]>=0: 
+                            mi.append(ST[i,n]/ST[i,k])
                     else:
                         mi.append(1000000)
                     TeX=TeX+sp.latex(ST[i,n]/ST[i,k])+","
