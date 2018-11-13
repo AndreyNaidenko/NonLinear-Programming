@@ -117,16 +117,32 @@ def canonical(conditions,sgn,variables):
         sgn[i]="="
     return conditions,sgn,variables
 def simplex(F,F1,conditions,b,n,m,x):
+    '''
+    F  
+    F1
+    
+    сделано для того что бы различить M и M
+    в F хранится M 
+    в F1 хранится 10000
+    '''
     TeX="\\begin{tabular}{"
     for i in range(n+2):
         TeX=TeX+"|c"
     TeX=TeX+"|}\r\n"
+        
+        
+    '''
+    
+    vb хранит базисные переменные в виде символов
+    Пока вводится в ручную
+    '''
     vb=[x[n-2],x[n-1],x[n-3],x[n-4]]
     
     f_coeffs=[]
     f_coeffs1=[]
     STOP=False
     f_coeffs=[]
+    
     for i in range(n):
         f_coeffs.append(F.coeff(x[i]))
         f_coeffs1.append(F1.coeff(x[i]))
@@ -139,11 +155,16 @@ def simplex(F,F1,conditions,b,n,m,x):
         c=np.zeros((n))
         for k in range(n):
             c[k]=conditions[i].coeff(x[k])
-         
         for j in range(n):
             ST[i,j]=sp.Rational(c[j]) 
     basis=sp.Matrix.zeros(m,1)
+    '''
+    Тут нужно выбрать базис. 
+    я его задаю в ручную.
     
+    basis хранит M как 'M'
+    basis1 хранит M как 100000
+    '''
     M=sp.symbols('M')
     basis[0]=-M
     basis[1]=-M
@@ -157,11 +178,10 @@ def simplex(F,F1,conditions,b,n,m,x):
     
     while STOP != True and NNNN<6:
             
-            NNNN= NNNN+1
-            f_coeffs=[]
+            f_coeffs=[] # коэффициенты функции F
             for i in range(n):
                 f_coeffs.append(F.coeff(x[i]))
-            M=sp.symbols('M')
+            M=sp.symbols('M') # M  ,которя в искуственном базисе M > > 1
             TeX=TeX+"\\begin{tabular}{"
             for i in range(n+3):
                  TeX=TeX+"|c"
@@ -189,33 +209,34 @@ def simplex(F,F1,conditions,b,n,m,x):
             TeX=TeX+"\\end{tabular}\r\n"
             for i in range(n):
                 TeX=TeX+"$\\Delta_{"+str(i+1)+"}="+sp.latex(basis.transpose())+"\\cdot"+sp.latex(ST.col(i))+"+"+"("+sp.latex(-1*f_coeffs[i])+")="+sp.latex((basis.transpose()*ST.col(i))[0]-f_coeffs[i])+"$\r\n\\newline"
-            deltas=[]
             
+            
+            deltas=[] #массив хранящий дельты
             for i in range(n):
-                deltas.append((basis1.transpose()*ST.col(i))[0]-f_coeffs1[i])
+                deltas.append((basis1.transpose()*ST.col(i))[0]-f_coeffs1[i]) #вычисление дельт
            
              
-            
+            '''
+            Цикл проходит по всем дельтам. Если дельта >= 0 , то записываем в нее 0 для того чтобы сохранить 
+            размер массива
+            '''
             for i in range(len(deltas)):
                 if deltas[i]>=0:
                     deltas[i]=0
-                deltas[i]=sp.Abs(deltas[i])
-            k=deltas.index(max(deltas))
+                deltas[i]=sp.Abs(deltas[i]) 
+            k=deltas.index(max(deltas))# Находим номер максимальной дельты 
            
             TeX=TeX+"Вводим в базис\t$"+sp.latex(x[k])+"$\r\n" 
-            if deltas[k]==0:
+            if deltas[k]==0: # Если дельта равна нулю , то план оптимальный , т.к. в прошлом цикле все дельты больше нуля приравняли к 0
                 STOP=True
                 break
             TeX=TeX+"Для определения вектора ,подлежащего исключению из базиса,находим $min("
             mi=[]
             for i in range(m):
-                
-                if ST[i,k]==0:
-                    
+                if ST[i,k]==0:    
                     TeX=TeX+"\\infty,"
                     mi.append(1000000)
-                else:
-                    
+                else:                 
                     if ST[i,k]>0:
                         if ST[i,n]/ST[i,k]>=0: 
                             mi.append(ST[i,n]/ST[i,k])
@@ -223,7 +244,7 @@ def simplex(F,F1,conditions,b,n,m,x):
                         mi.append(1000000)
                     TeX=TeX+sp.latex(ST[i,n]/ST[i,k])+","
             r=mi.index(min(mi))
-             
+        
             
             TeX=TeX+")="+sp.latex(min(mi)) +"$\r\n"
             TeX=TeX+"Исключаем \t$"+sp.latex(vb[r])+"$\r\n"
