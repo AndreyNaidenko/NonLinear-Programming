@@ -16,12 +16,12 @@ cond=get_conditions(c,3)
 simplex(F,cond,[180,100,95],6,3)
 '''
 
-f="-5*x1**2-2*x2**2-3*x1+9*x2"
+f="2*x1+4*x2-x1**2-2*x2**2"
 sgn=["<","<"]
-c=["-3*x1-6*x2","x1+7*x2"]
+c=["x1+2*x2","2*x1-x2"]
 x=get_s(2,'x')
 VAR=[x[0],x[1]]
-cb=[10,2]
+cb=[8,12]
 F=get_f(f)
 cond=get_conditions(c,cb,2)
 L,VAR=get_L(F,cond,VAR)
@@ -36,32 +36,32 @@ for p in packages:
 TeX=TeX+"\\begin{document} \r\n"
 TeX=TeX+"\\begin{center} \r\n"  
 TeX=TeX+"$$F="+sp.latex(F) +"\\to max $$ \r\n"
-TeX=TeX+cond_to_tex(cond,[">",">"]);
+TeX=TeX+cond_to_tex(cond,sgn);
 TeX = TeX + "\\end{center} \r\n"
 TeX=TeX+"\\newline \\vspace{5mm} Составляем функцию Лагранжа:"
 TeX=TeX+"$$ L="+sp.latex(L)+"$$ \r\n"
 TeX=TeX+"\\newline Запишем необходимые и достаточные условия существования седловой точки построенной функции:\r\n \\vspace{1mm}"
 K=0
 
-TeX = TeX + "\\begin{cases}"
+TeX = TeX + "$\\begin{cases}"
 for i in range(len(x)):
     TeX=TeX+" \\vspace{1mm} \\dfrac{\\partial L}{\\partial "+sp.latex(x[i])+"}="+sp.latex(dL[K])+" \\leq 0\\\\  \\vspace{1mm} \r\n"
     K=K+1
 for i in range(len(y)):
     TeX=TeX+"\\dfrac{\\partial L}{\\partial "+sp.latex(y[i])+"}="+sp.latex(dL[K])+" \\geq 0\\\\"
     K=K+1
-TeX = TeX + "\\end{cases} \r\n \\vspace{1mm}"
+TeX = TeX + "\\end{cases}$ \r\n \\vspace{1mm}"
 
 K = 0
 
-TeX = TeX + "\\begin{cases}"
+TeX = TeX + "$\\begin{cases}"
 for i in range(len(x)):
-    TeX=TeX+" \\vspace{1mm} " + sp.latex(x[i])+ "\\dfrac{\\partial L}{\\partial "+sp.latex(x[i])+"}=" + sp.latex(x[i]) +  "(" + sp.latex(dL[K])+ ")= 0\\\\  \\vspace{1mm} \r\n"
+    TeX=TeX+" \\vspace{1mm} " + sp.latex(x[i])+ "\\dfrac{\\partial L}{\\partial "+sp.latex(x[i])+"}="+sp.latex(x[i]*dL[K])+ "= 0\\\\  \\vspace{1mm} \r\n"
     K=K+1
 for i in range(len(y)):
-    TeX=TeX+" " + sp.latex(y[i]) +"\\dfrac{\\partial L}{\\partial "+sp.latex(y[i])+"}=" + sp.latex(y[i]) + "(" + sp.latex(dL[K])+") = 0\\\\"
+    TeX=TeX+" " + sp.latex(y[i]) +"\\dfrac{\\partial L}{\\partial "+sp.latex(y[i])+"}=" +sp.latex(y[i]*dL[K])+"= 0\\\\  \\vspace{1mm} \r\n"
     K=K+1
-TeX = TeX + "\\end{cases} \r\n"
+TeX = TeX + "\\end{cases}$\r\n"
 
 sgn.append(">")
 sgn.append(">")
@@ -85,18 +85,27 @@ z=get_s(2,'z')
 m=sp.symbols('M')
 VAR.append(z[0])
 VAR.append(z[1])
-F1=F-1000*z[0]-1000*z[1]
-F=F-m*z[0]-m*z[1]
+G1=-1000*z[0]-1000*z[1]
+G=-m*z[0]-m*z[1]
 new_cond[0]=new_cond[0]+z[0]
 new_cond[1]=new_cond[1]+z[1]
-
+TeX = TeX + "\\vspace{2mm} Учитывая равенства, можно записать: $v_1 x_1 = 0, v_2 x_2 = 0, w_1 y_1 = 0, w_2 y_2 = 0.\r\n"
 TeX=TeX+"\\newline \\vspace{2mm} Для нахождения системы линейных уравнений воспользуемся методом искусственного базиса. " \
         "В первое и второе уравнение системы соответственно добавим дополнительную неотрицательную переменную $z_1$ и $z_2$  " \
         "и рассмотрим задачу линейного программирования, сотостоящую в определении максимального значения функции \r\n \\vspace{2mm} "
 TeX=TeX+"$$\overline{F}=-Mz_1-Mz_2$$ при условиях \r\n \\vspace{2mm}"
 TeX=TeX+ "\\vspace{1mm} \r\n " + cond_to_tex(new_cond,sgn, True, True, True);
 TeX=TeX+"\\newline \\vspace{8mm} Симплекс-метод: \r\n "
-TeX=TeX+simplex(F,F1,new_cond,b,len(VAR),len(new_cond),VAR)
+simpl,vb,bi=simplex(G,G1,new_cond,b,len(VAR),len(new_cond),VAR)
+TeX=TeX+simpl
+
+for i in range(len(vb)):
+    if vb[i]==VAR[0]:
+        a=bi[i]
+    if vb[i]==VAR[1]:
+        b=bi[i]
+TeX=TeX+ "$F(X)="+sp.latex(F.evalf(subs={VAR[0]:a, VAR[1]:b})) + "$ \r\n"
+
 TeX=TeX+"\\end{center}  \r\n" 
 TeX=TeX+"\\end{document} \r\n"
 

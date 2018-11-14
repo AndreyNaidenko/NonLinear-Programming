@@ -66,7 +66,7 @@ def get_conditions(c,cb,m):
         print("Количество условий должно равнятся m.")
     else :
         for i in range(m):
-            conditions.append(cb[i]-sp.sympify(c[i]))
+            conditions.append(sp.sympify(c[i])-cb[i])
      
         return conditions
     
@@ -79,7 +79,7 @@ def get_L(F,conditions,variables):
     y=get_s(len(conditions),'y')
     for i in range(len(conditions)):
        variables.append(y[i])
-       L=L+y[i]*conditions[i]
+       L=L+y[i]*(-1*conditions[i])
     return L,variables   
 
 def diff_L(L,n,m):
@@ -236,10 +236,12 @@ def simplex(F,F1,conditions,b,n,m,x):
                 deltas[i]=sp.Abs(deltas[i]) 
             k=deltas.index(max(deltas))# Находим номер максимальной дельты 
            
-            TeX=TeX+"Вводим в базис\t$"+sp.latex(x[k])+"$\r\n" 
+             
             if deltas[k]==0: # Если дельта равна нулю , то план оптимальный , т.к. в прошлом цикле все дельты больше нуля приравняли к 0
                 STOP=True
                 break
+
+            TeX=TeX+"Имеются отрицательные $\Delta_i$, поэтому продолжаем поиск оптимального плана. Вводим в базис\t$"+sp.latex(x[k])+"$\r\n"
             TeX=TeX+"\r\n \\vspace{2mm} Для определения вектора, подлежащего исключению из базиса, находим $min("
             mi=[]
             for i in range(m):
@@ -282,6 +284,19 @@ def simplex(F,F1,conditions,b,n,m,x):
             basis[r]=f_coeffs[k]
             vb[r]=x[k]
             
-    TeX=TeX+"Все $\Delta_{i}$ не отрицательны , план является оптимальным \r\n"
+    TeX=TeX+"Все $\Delta_{i}$ не отрицательны, план является оптимальным. \r\n"
+
+    #TeX = TeX + "\r\n"
+    TeX = TeX + "\\vspace{2mm} Получили оптимальный план:\r\n"
+    b_i = ST.col(n)
+    for i in range(0, len(vb)):
+        TeX = TeX + sp.latex(vb[i]) + " = " + sp.latex(b_i[i]) + ";"
+
+    TeX = TeX + "\r\n"
+
+    TeX = TeX + "\\vspace{2mm} Так как $v_1 x_1 = 0, v_2 x_2 = 0, w_1 y_1 = 0, w_2 y_2 = 0,$ то $(X_0; Y_0) = " \
+                "(" + sp.latex(b_i[0]) + ";" + sp.latex(b_i[0]) + "; 0; 0)$ является седловой точкой функции Лагранжа для исходной задачи. " \
+                "Следовательно, $X^* = (" + sp.latex(b_i[0]) + ";" + sp.latex(b_i[1]) + "$) --- оптимальный план исходной задачи. \r\n"
+
          
-    return TeX
+    return TeX,vb,ST.col(n)
