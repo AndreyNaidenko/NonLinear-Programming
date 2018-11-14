@@ -3,18 +3,25 @@ import numpy as np
 
 
 
-def cond_to_tex(cond,sgn):
+def cond_to_tex(cond,sgn, add_variable_y=False, add_variable_v_w=False, add_variable_z=False):
     TeX=""
     TeX=TeX+"$\\begin{cases} \r\n"
-
+    number_variable = 2
     for c in range(len(cond)):
         s="="
         if sgn[c][0]=="<":
             s="\\leq"
         if sgn[c][0]==">":
             s="\\geq"
-        TeX=TeX+"\t"+sp.latex(cond[c])+s+"0 \\\\ \r\n" 
-    TeX=TeX+"\\end{cases}$ \r\n" 
+        TeX=TeX+"\t"+sp.latex(cond[c])+s+" 0 \\\\ \r\n"
+    if not add_variable_y and not add_variable_v_w and not add_variable_z:
+        TeX = TeX + "x_i \geq 0, \\ i = \overline{1," + str(number_variable) + "}\\end{cases}$ \r\n"
+    if add_variable_y and not add_variable_v_w and not add_variable_z:
+        TeX = TeX + "x_i, y_i \geq 0, \\ i = \overline{1," + str(number_variable) + "}\\end{cases}$ \r\n"
+    if add_variable_y and add_variable_v_w and not add_variable_z:
+        TeX = TeX + "x_i, y_i, v_i, w_i \geq 0, \\ i = \overline{1," + str(number_variable) + "}\\end{cases}$ \r\n"
+    if add_variable_y and add_variable_v_w and add_variable_z:
+        TeX = TeX + "x_i, y_i, v_i, w_i, z_i \geq 0, \\ i = \overline{1," + str(number_variable) + "}\\end{cases}$ \r\n"
     return TeX
 def get_s(n,sym):
     '''
@@ -175,14 +182,14 @@ def simplex(F,F1,conditions,b,n,m,x):
     
     TeX=""
     NNNN=0
-    
+    TeX = TeX + "\\end{tabular}\r\n \\vspace{2mm}"
     while STOP != True and NNNN<6:
             
             f_coeffs=[] # коэффициенты функции F
             for i in range(n):
                 f_coeffs.append(F.coeff(x[i]))
             M=sp.symbols('M') # M  ,которя в искуственном базисе M > > 1
-            TeX=TeX+"\\begin{tabular}{"
+            TeX=TeX+"\r\n \\vspace{2mm} \\begin{tabular}{"
             for i in range(n+3):
                  TeX=TeX+"|c"
             TeX=TeX+"|}\r\n  \hline \r\n"   
@@ -206,10 +213,13 @@ def simplex(F,F1,conditions,b,n,m,x):
             
             
              
-            TeX=TeX+"\\end{tabular}\r\n"
+            TeX=TeX+"\\end{tabular}\r\n \\vspace{2mm}"
             for i in range(n):
-                TeX=TeX+"$\\Delta_{"+str(i+1)+"}="+sp.latex(basis.transpose())+"\\cdot"+sp.latex(ST.col(i))+"+"+"("+sp.latex(-1*f_coeffs[i])+")="+sp.latex((basis.transpose()*ST.col(i))[0]-f_coeffs[i])+"$\r\n\\newline"
-            
+                TeX=TeX+"$\\Delta_{"+str(i+1)+"}="+sp.latex(basis.transpose())+"\\cdot"+sp.latex(ST.col(i))+"+";
+                if "-" in sp.latex(-1*f_coeffs[i]):
+                    TeX=TeX+"("+sp.latex(-1*f_coeffs[i])+")="+sp.latex((basis.transpose()*ST.col(i))[0]-f_coeffs[i])+"$\r\n\\newline"
+                else:
+                    TeX = TeX + sp.latex(-1 * f_coeffs[i]) + "=" + sp.latex((basis.transpose() * ST.col(i))[0] - f_coeffs[i]) + "$\r\n\\newline \\vspace{2mm}"
             
             deltas=[] #массив хранящий дельты
             for i in range(n):
@@ -230,7 +240,7 @@ def simplex(F,F1,conditions,b,n,m,x):
             if deltas[k]==0: # Если дельта равна нулю , то план оптимальный , т.к. в прошлом цикле все дельты больше нуля приравняли к 0
                 STOP=True
                 break
-            TeX=TeX+"Для определения вектора ,подлежащего исключению из базиса,находим $min("
+            TeX=TeX+"\r\n \\vspace{2mm} Для определения вектора, подлежащего исключению из базиса, находим $min("
             mi=[]
             for i in range(m):
                 if ST[i,k]==0:    
@@ -246,7 +256,7 @@ def simplex(F,F1,conditions,b,n,m,x):
             r=mi.index(min(mi))
         
             
-            TeX=TeX+")="+sp.latex(min(mi)) +"$\r\n"
+            TeX=TeX+")="+sp.latex(min(mi)) +"$\r\n \\vspace{2mm}"
             TeX=TeX+"Исключаем \t$"+sp.latex(vb[r])+"$\r\n"
             if(min(mi)>1000):
                 break
