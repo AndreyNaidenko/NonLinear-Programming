@@ -37,31 +37,49 @@ TeX=TeX+"\\begin{document} \r\n"
 TeX=TeX+"\\begin{center} \r\n"  
 TeX=TeX+"$$F="+sp.latex(F) +"\\to max $$ \r\n"
 TeX=TeX+cond_to_tex(cond,[">",">"]);
-TeX=TeX+"\\newline Составляем функцию L \r\n"
-TeX=TeX+"$$ L(x,y)="+sp.latex(L)+"$$ \r\n"
-TeX=TeX+"\\newline Находим частные производные от функции L \r\n"
+TeX = TeX + "\\end{center} \r\n"
+TeX=TeX+"\\newline \\vspace{5mm} Составляем функцию Лагранжа:"
+TeX=TeX+"$$ L="+sp.latex(L)+"$$ \r\n"
+TeX=TeX+"\\newline Запишем необходимые и достаточные условия существования седловой точки построенной функции:\r\n \\vspace{1mm}"
 K=0
+
+TeX = TeX + "\\begin{cases}"
 for i in range(len(x)):
-    TeX=TeX+"$$\\frac{\\partial L(x,y)}{\\partial "+sp.latex(x[i])+"}="+sp.latex(dL[K])+"$$\r\n"
+    TeX=TeX+" \\vspace{1mm} \\dfrac{\\partial L}{\\partial "+sp.latex(x[i])+"}="+sp.latex(dL[K])+" \\leq 0\\\\  \\vspace{1mm} \r\n"
     K=K+1
 for i in range(len(y)):
-    TeX=TeX+"$$\\frac{\\partial L(x,y)}{\\partial "+sp.latex(y[i])+"}="+sp.latex(dL[K])+"$$\r\n"
+    TeX=TeX+"\\dfrac{\\partial L}{\\partial "+sp.latex(y[i])+"}="+sp.latex(dL[K])+" \\geq 0\\\\"
     K=K+1
-    
+TeX = TeX + "\\end{cases} \r\n \\vspace{1mm}"
+
+K = 0
+
+TeX = TeX + "\\begin{cases}"
+for i in range(len(x)):
+    TeX=TeX+" \\vspace{1mm} " + sp.latex(x[i])+ "\\dfrac{\\partial L}{\\partial "+sp.latex(x[i])+"}=" + sp.latex(x[i]) +  "(" + sp.latex(dL[K])+ ")= 0\\\\  \\vspace{1mm} \r\n"
+    K=K+1
+for i in range(len(y)):
+    TeX=TeX+" " + sp.latex(y[i]) +"\\dfrac{\\partial L}{\\partial "+sp.latex(y[i])+"}=" + sp.latex(y[i]) + "(" + sp.latex(dL[K])+") = 0\\\\"
+    K=K+1
+TeX = TeX + "\\end{cases} \r\n"
+
 sgn.append(">")
 sgn.append(">")
 new_cond=dL
-TeX=TeX+cond_to_tex(new_cond,sgn);
+#TeX=TeX+cond_to_tex(new_cond,sgn);
+TeX=TeX+"\\newline \\vspace{2mm} Систему неравенств перепишем в следующим образом: \r\n \\vspace{2mm} "
 for i in range(len(new_cond)):
     new_cond[i]=new_cond[i]*-1
     if sgn[i]==">":
         sgn[i]="<"
     else:
         sgn[i]=">"
-TeX=TeX+cond_to_tex(new_cond,sgn)
+TeX=TeX+cond_to_tex(new_cond,sgn, True)
+
+TeX=TeX+"\\newline \\vspace{2mm} Вводя теперь дополнительные неотрицательные переменные $v_1, v_2, w_1$ и $w_2$, обратим неравенства в равенства: \r\n \\vspace{2mm} "
 
 new_cond,sgn,VAR=canonical(new_cond,sgn,VAR)
-TeX=TeX+cond_to_tex(new_cond,sgn);
+TeX=TeX+cond_to_tex(new_cond,sgn, True, True);
 b=get_b(new_cond)
 z=get_s(2,'z')
 m=sp.symbols('M')
@@ -71,7 +89,13 @@ F1=F-1000*z[0]-1000*z[1]
 F=F-m*z[0]-m*z[1]
 new_cond[0]=new_cond[0]+z[0]
 new_cond[1]=new_cond[1]+z[1]
-TeX=TeX+cond_to_tex(new_cond,sgn);
+
+TeX=TeX+"\\newline \\vspace{2mm} Для нахождения системы линейных уравнений воспользуемся методом искусственного базиса. " \
+        "В первое и второе уравнение системы соответственно добавим дополнительную неотрицательную переменную $z_1$ и $z_2$  " \
+        "и рассмотрим задачу линейного программирования, сотостоящую в определении максимального значения функции \r\n \\vspace{2mm} "
+TeX=TeX+"$$\overline{F}=-Mz_1-Mz_2$$ при условиях \r\n \\vspace{2mm}"
+TeX=TeX+ "\\vspace{1mm} \r\n " + cond_to_tex(new_cond,sgn, True, True, True);
+TeX=TeX+"\\newline \\vspace{8mm} Симплекс-метод: \r\n "
 TeX=TeX+simplex(F,F1,new_cond,b,len(VAR),len(new_cond),VAR)
 TeX=TeX+"\\end{center}  \r\n" 
 TeX=TeX+"\\end{document} \r\n"
