@@ -66,7 +66,7 @@ def get_conditions(c,cb,m):
         print("Количество условий должно равнятся m.")
     else :
         for i in range(m):
-            conditions.append(cb[i]-sp.sympify(c[i]))
+            conditions.append(sp.sympify(c[i])-cb[i])
      
         return conditions
     
@@ -79,7 +79,7 @@ def get_L(F,conditions,variables):
     y=get_s(len(conditions),'y')
     for i in range(len(conditions)):
        variables.append(y[i])
-       L=L+y[i]*conditions[i]
+       L=L+y[i]*(-1*conditions[i])
     return L,variables   
 
 def diff_L(L,n,m):
@@ -236,10 +236,11 @@ def simplex(F,F1,conditions,b,n,m,x):
                 deltas[i]=sp.Abs(deltas[i]) 
             k=deltas.index(max(deltas))# Находим номер максимальной дельты 
            
-            TeX=TeX+"Вводим в базис\t$"+sp.latex(x[k])+"$\r\n" 
+             
             if deltas[k]==0: # Если дельта равна нулю , то план оптимальный , т.к. в прошлом цикле все дельты больше нуля приравняли к 0
                 STOP=True
                 break
+            TeX=TeX+"Вводим в базис\t$"+sp.latex(x[k])+"$\r\n"
             TeX=TeX+"\r\n \\vspace{2mm} Для определения вектора, подлежащего исключению из базиса, находим $min("
             mi=[]
             for i in range(m):
@@ -284,4 +285,4 @@ def simplex(F,F1,conditions,b,n,m,x):
             
     TeX=TeX+"Все $\Delta_{i}$ не отрицательны , план является оптимальным \r\n"
          
-    return TeX
+    return TeX,vb,ST.col(n)
