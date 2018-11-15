@@ -241,7 +241,11 @@ def simplex(F,F1,conditions,b,n,m,x):
                 STOP=True
                 break
 
+
             TeX=TeX+"Имеются отрицательные $\Delta_i$, поэтому продолжаем поиск оптимального плана. Вводим в базис\t$"+sp.latex(x[k])+"$\r\n"
+
+            
+
             TeX=TeX+"\r\n \\vspace{2mm} Для определения вектора, подлежащего исключению из базиса, находим $min("
             mi=[]
             for i in range(m):
